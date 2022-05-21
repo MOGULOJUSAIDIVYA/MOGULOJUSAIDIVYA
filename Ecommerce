@@ -1,0 +1,162 @@
+<!---My odea is first we will show a section which is the main home page and when we click on the AddToCart button then a modal appears on the screen where we can add 
+
+items to the cart--->
+
+import React from 'react';
+import ReactDOM from 'react-dom';
+import Section from './Section';
+
+
+ReactDOM.render(
+  <React.StrictMode>
+    <Section />
+  </React.StrictMode>,
+  document.getElementById('root')
+);
+
+<!-- this is to show the modal for adding items to the cart-->
+
+import react from 'react';
+import AddToCart from 'react/AddToCart';
+
+class Section extends React.Component{
+constructor()
+{
+super();
+this.state={flag=0, show:false}
+}
+showModal=e=>{
+	e.preventDefault();
+	if(this.state.flag)
+	{
+		const action=buttonAction("AddToCart");
+		store.dispatch(action);
+		console.log(store.getState());
+this.setState({show:!this.state.show});
+	}
+};
+render()
+{
+if(this.state.show)
+{
+return<AddToCart/>
+}
+return(
+
+<center>
+
+<label><h3>Ecommerce website</h3></label><br/><br/>
+
+<button onClick={e=>{this.showModal();}} style={{color:"rgb(32,103,201)"}}><b>Add Items to Cart</b></button>
+<br/><br/>
+
+<div>
+<h4></h4> 
+<button tag={Link} to={'/Checkout'} color="primary" size="lg">Checkout</button>
+</div>
+
+</center>
+);
+}
+}
+export default Section;
+
+-----------------------------------------------------------
+
+<!-- on clicking the button Add Items to Cart then this modal appears-->
+
+import react from'react'
+import axios from 'axios'
+class AddToCart extends React.Component{
+constructor()
+{
+super(props);
+this.handleSubmit=this.handleSubmit.bind(this);
+this.state={close:false,
+AddToCart:"",}
+}
+this.handleSubmit=this.handleSubmit.bind(this);
+onClose=e=>{
+this.setState({close:!this.state.close});
+};
+
+handleSubmit(event)
+{
+	event.preventDefault();
+	alert("Added to cart successfully");
+	console.log(this.state);
+	axios.post("http://localhost:3006/now',this.state).then(response=>{
+	console.log(response);
+	})
+.catch(error=>(console.log(error)})
+}
+
+render()
+{
+if(this.state.close)
+{
+return<Section/>
+}
+return(
+<div>
+<center>
+<form>
+<h1>AddToCart</h1>
+<button onClick={e=>{this.onClose(e);}}>
+Close
+</button>
+<br/><br/><br/><br/><br/><br/>
+</form>
+</div>
+);
+}
+}
+export default AddToCart;
+-------------------------------------------
+
+export default function buttonAction(but){
+	return{
+	type:"AddToCart",
+	payload: {description: but+"button is clicked"}
+	
+	}
+}
+------using redux to perform actions------
+export default function actionGenerator(formData){
+	return{
+		type:"AddToCart",
+		payload:{
+		item:formData.AddToCart}
+	}
+}
+
+----Store for storing the state----
+import {createStore} from 'redux'
+import reducer from 'reducer'
+const store=createStore(reducer);
+export default store;
+
+-----Add Item-----
+<!--- we can add items to the cart with a delay of 500 milliseconds this is to overcome the problem of adding items in a constant loop-----
+import {call,delay] from 'redux-saga/effects';
+import {takeLatest, put} from 'redux-saga/effects';
+
+function addItem(action)
+{
+	const newAction={
+		type:"addItem",
+	payload:action.payload,}
+	try{
+	yield.delay(500);
+	const.data=postData(newAction.payload);
+	yield.put(newAction);
+	}
+	catch(e){
+		console.log(e);
+	}
+}
+
+
+
+
+
